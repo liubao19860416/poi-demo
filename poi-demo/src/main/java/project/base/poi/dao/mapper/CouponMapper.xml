@@ -1,0 +1,575 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="project.base.poi.dao.mapper.CouponMapper" >
+  <resultMap id="BaseResultMap" type="coupon" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="fitToMinKm" property="fitToMinKm" jdbcType="INTEGER" />
+    <result column="fitToMaxKm" property="fitToMaxKm" jdbcType="INTEGER" />
+    <result column="fitToMinDaysUsed" property="fitToMinDaysUsed" jdbcType="INTEGER" />
+    <result column="fitToMaxDaysUsed" property="fitToMaxDaysUsed" jdbcType="INTEGER" />
+    <result column="fitToEmissionVolume" property="fitToEmissionVolume" jdbcType="VARCHAR" />
+    <result column="fitToVehicleScope" property="fitToVehicleScope" jdbcType="VARCHAR" />
+    <result column="fitToCity" property="fitToCity" jdbcType="VARCHAR" />
+    <result column="beginDatetime" property="beginDatetime" jdbcType="TIMESTAMP" />
+    <result column="endDatetime" property="endDatetime" jdbcType="TIMESTAMP" />
+    <result column="validInDays" property="validInDays" jdbcType="INTEGER" />
+    <result column="moneyAmount" property="moneyAmount" jdbcType="REAL" />
+    <result column="color1" property="color1" jdbcType="VARCHAR" />
+    <result column="color2" property="color2" jdbcType="VARCHAR" />
+    <result column="ruleBrief" property="ruleBrief" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="actived" property="actived" jdbcType="BIT" />
+    <result column="deleted" property="deleted" jdbcType="BIT" />
+    <result column="createdDatetime" property="createdDatetime" jdbcType="TIMESTAMP" />
+    <result column="updatedDatetime" property="updatedDatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="project.base.poi.entiy.Coupon" extends="BaseResultMap" >
+    <result column="ruleDetail" property="ruleDetail" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, code, name, fitToMinKm, fitToMaxKm, fitToMinDaysUsed, fitToMaxDaysUsed, fitToEmissionVolume, 
+    fitToVehicleScope, fitToCity, beginDatetime, endDatetime, validInDays, moneyAmount, 
+    color1, color2, ruleBrief, description, actived, deleted, createdDatetime, updatedDatetime
+  </sql>
+  <sql id="Blob_Column_List" >
+    ruleDetail
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="project.base.poi.entiy.CouponExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_coupon
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="project.base.poi.entiy.CouponExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_coupon
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_coupon
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_coupon
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="project.base.poi.entiy.CouponExample" >
+    delete from t_coupon
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="project.base.poi.entiy.Coupon" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+      SELECT LAST_INSERT_ID()+1
+    </selectKey>
+    insert into t_coupon (id, code, name, 
+      fitToMinKm, fitToMaxKm, fitToMinDaysUsed, 
+      fitToMaxDaysUsed, fitToEmissionVolume, 
+      fitToVehicleScope, fitToCity, beginDatetime, 
+      endDatetime, validInDays, moneyAmount, 
+      color1, color2, ruleBrief, 
+      description, actived, deleted, 
+      createdDatetime, updatedDatetime, ruleDetail
+      )
+    values (#{id,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{fitToMinKm,jdbcType=INTEGER}, #{fitToMaxKm,jdbcType=INTEGER}, #{fitToMinDaysUsed,jdbcType=INTEGER}, 
+      #{fitToMaxDaysUsed,jdbcType=INTEGER}, #{fitToEmissionVolume,jdbcType=VARCHAR}, 
+      #{fitToVehicleScope,jdbcType=VARCHAR}, #{fitToCity,jdbcType=VARCHAR}, #{beginDatetime,jdbcType=TIMESTAMP}, 
+      #{endDatetime,jdbcType=TIMESTAMP}, #{validInDays,jdbcType=INTEGER}, #{moneyAmount,jdbcType=REAL}, 
+      #{color1,jdbcType=VARCHAR}, #{color2,jdbcType=VARCHAR}, #{ruleBrief,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{actived,jdbcType=BIT}, #{deleted,jdbcType=BIT}, 
+      #{createdDatetime,jdbcType=TIMESTAMP}, #{updatedDatetime,jdbcType=TIMESTAMP}, #{ruleDetail,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="project.base.poi.entiy.Coupon" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+      SELECT LAST_INSERT_ID()+1
+    </selectKey>
+    insert into t_coupon
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      id,
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="fitToMinKm != null" >
+        fitToMinKm,
+      </if>
+      <if test="fitToMaxKm != null" >
+        fitToMaxKm,
+      </if>
+      <if test="fitToMinDaysUsed != null" >
+        fitToMinDaysUsed,
+      </if>
+      <if test="fitToMaxDaysUsed != null" >
+        fitToMaxDaysUsed,
+      </if>
+      <if test="fitToEmissionVolume != null" >
+        fitToEmissionVolume,
+      </if>
+      <if test="fitToVehicleScope != null" >
+        fitToVehicleScope,
+      </if>
+      <if test="fitToCity != null" >
+        fitToCity,
+      </if>
+      <if test="beginDatetime != null" >
+        beginDatetime,
+      </if>
+      <if test="endDatetime != null" >
+        endDatetime,
+      </if>
+      <if test="validInDays != null" >
+        validInDays,
+      </if>
+      <if test="moneyAmount != null" >
+        moneyAmount,
+      </if>
+      <if test="color1 != null" >
+        color1,
+      </if>
+      <if test="color2 != null" >
+        color2,
+      </if>
+      <if test="ruleBrief != null" >
+        ruleBrief,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="actived != null" >
+        actived,
+      </if>
+      <if test="deleted != null" >
+        deleted,
+      </if>
+      <if test="createdDatetime != null" >
+        createdDatetime,
+      </if>
+      <if test="updatedDatetime != null" >
+        updatedDatetime,
+      </if>
+      <if test="ruleDetail != null" >
+        ruleDetail,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=BIGINT},
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="fitToMinKm != null" >
+        #{fitToMinKm,jdbcType=INTEGER},
+      </if>
+      <if test="fitToMaxKm != null" >
+        #{fitToMaxKm,jdbcType=INTEGER},
+      </if>
+      <if test="fitToMinDaysUsed != null" >
+        #{fitToMinDaysUsed,jdbcType=INTEGER},
+      </if>
+      <if test="fitToMaxDaysUsed != null" >
+        #{fitToMaxDaysUsed,jdbcType=INTEGER},
+      </if>
+      <if test="fitToEmissionVolume != null" >
+        #{fitToEmissionVolume,jdbcType=VARCHAR},
+      </if>
+      <if test="fitToVehicleScope != null" >
+        #{fitToVehicleScope,jdbcType=VARCHAR},
+      </if>
+      <if test="fitToCity != null" >
+        #{fitToCity,jdbcType=VARCHAR},
+      </if>
+      <if test="beginDatetime != null" >
+        #{beginDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDatetime != null" >
+        #{endDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="validInDays != null" >
+        #{validInDays,jdbcType=INTEGER},
+      </if>
+      <if test="moneyAmount != null" >
+        #{moneyAmount,jdbcType=REAL},
+      </if>
+      <if test="color1 != null" >
+        #{color1,jdbcType=VARCHAR},
+      </if>
+      <if test="color2 != null" >
+        #{color2,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleBrief != null" >
+        #{ruleBrief,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="actived != null" >
+        #{actived,jdbcType=BIT},
+      </if>
+      <if test="deleted != null" >
+        #{deleted,jdbcType=BIT},
+      </if>
+      <if test="createdDatetime != null" >
+        #{createdDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedDatetime != null" >
+        #{updatedDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ruleDetail != null" >
+        #{ruleDetail,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="project.base.poi.entiy.CouponExample" resultType="java.lang.Integer" >
+    select count(*) from t_coupon
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_coupon
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.code != null" >
+        code = #{record.code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fitToMinKm != null" >
+        fitToMinKm = #{record.fitToMinKm,jdbcType=INTEGER},
+      </if>
+      <if test="record.fitToMaxKm != null" >
+        fitToMaxKm = #{record.fitToMaxKm,jdbcType=INTEGER},
+      </if>
+      <if test="record.fitToMinDaysUsed != null" >
+        fitToMinDaysUsed = #{record.fitToMinDaysUsed,jdbcType=INTEGER},
+      </if>
+      <if test="record.fitToMaxDaysUsed != null" >
+        fitToMaxDaysUsed = #{record.fitToMaxDaysUsed,jdbcType=INTEGER},
+      </if>
+      <if test="record.fitToEmissionVolume != null" >
+        fitToEmissionVolume = #{record.fitToEmissionVolume,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fitToVehicleScope != null" >
+        fitToVehicleScope = #{record.fitToVehicleScope,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fitToCity != null" >
+        fitToCity = #{record.fitToCity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.beginDatetime != null" >
+        beginDatetime = #{record.beginDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endDatetime != null" >
+        endDatetime = #{record.endDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.validInDays != null" >
+        validInDays = #{record.validInDays,jdbcType=INTEGER},
+      </if>
+      <if test="record.moneyAmount != null" >
+        moneyAmount = #{record.moneyAmount,jdbcType=REAL},
+      </if>
+      <if test="record.color1 != null" >
+        color1 = #{record.color1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.color2 != null" >
+        color2 = #{record.color2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ruleBrief != null" >
+        ruleBrief = #{record.ruleBrief,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.actived != null" >
+        actived = #{record.actived,jdbcType=BIT},
+      </if>
+      <if test="record.deleted != null" >
+        deleted = #{record.deleted,jdbcType=BIT},
+      </if>
+      <if test="record.createdDatetime != null" >
+        createdDatetime = #{record.createdDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatedDatetime != null" >
+        updatedDatetime = #{record.updatedDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.ruleDetail != null" >
+        ruleDetail = #{record.ruleDetail,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update t_coupon
+    set id = #{record.id,jdbcType=BIGINT},
+      code = #{record.code,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      fitToMinKm = #{record.fitToMinKm,jdbcType=INTEGER},
+      fitToMaxKm = #{record.fitToMaxKm,jdbcType=INTEGER},
+      fitToMinDaysUsed = #{record.fitToMinDaysUsed,jdbcType=INTEGER},
+      fitToMaxDaysUsed = #{record.fitToMaxDaysUsed,jdbcType=INTEGER},
+      fitToEmissionVolume = #{record.fitToEmissionVolume,jdbcType=VARCHAR},
+      fitToVehicleScope = #{record.fitToVehicleScope,jdbcType=VARCHAR},
+      fitToCity = #{record.fitToCity,jdbcType=VARCHAR},
+      beginDatetime = #{record.beginDatetime,jdbcType=TIMESTAMP},
+      endDatetime = #{record.endDatetime,jdbcType=TIMESTAMP},
+      validInDays = #{record.validInDays,jdbcType=INTEGER},
+      moneyAmount = #{record.moneyAmount,jdbcType=REAL},
+      color1 = #{record.color1,jdbcType=VARCHAR},
+      color2 = #{record.color2,jdbcType=VARCHAR},
+      ruleBrief = #{record.ruleBrief,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      actived = #{record.actived,jdbcType=BIT},
+      deleted = #{record.deleted,jdbcType=BIT},
+      createdDatetime = #{record.createdDatetime,jdbcType=TIMESTAMP},
+      updatedDatetime = #{record.updatedDatetime,jdbcType=TIMESTAMP},
+      ruleDetail = #{record.ruleDetail,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_coupon
+    set id = #{record.id,jdbcType=BIGINT},
+      code = #{record.code,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      fitToMinKm = #{record.fitToMinKm,jdbcType=INTEGER},
+      fitToMaxKm = #{record.fitToMaxKm,jdbcType=INTEGER},
+      fitToMinDaysUsed = #{record.fitToMinDaysUsed,jdbcType=INTEGER},
+      fitToMaxDaysUsed = #{record.fitToMaxDaysUsed,jdbcType=INTEGER},
+      fitToEmissionVolume = #{record.fitToEmissionVolume,jdbcType=VARCHAR},
+      fitToVehicleScope = #{record.fitToVehicleScope,jdbcType=VARCHAR},
+      fitToCity = #{record.fitToCity,jdbcType=VARCHAR},
+      beginDatetime = #{record.beginDatetime,jdbcType=TIMESTAMP},
+      endDatetime = #{record.endDatetime,jdbcType=TIMESTAMP},
+      validInDays = #{record.validInDays,jdbcType=INTEGER},
+      moneyAmount = #{record.moneyAmount,jdbcType=REAL},
+      color1 = #{record.color1,jdbcType=VARCHAR},
+      color2 = #{record.color2,jdbcType=VARCHAR},
+      ruleBrief = #{record.ruleBrief,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      actived = #{record.actived,jdbcType=BIT},
+      deleted = #{record.deleted,jdbcType=BIT},
+      createdDatetime = #{record.createdDatetime,jdbcType=TIMESTAMP},
+      updatedDatetime = #{record.updatedDatetime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="project.base.poi.entiy.Coupon" >
+    update t_coupon
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="fitToMinKm != null" >
+        fitToMinKm = #{fitToMinKm,jdbcType=INTEGER},
+      </if>
+      <if test="fitToMaxKm != null" >
+        fitToMaxKm = #{fitToMaxKm,jdbcType=INTEGER},
+      </if>
+      <if test="fitToMinDaysUsed != null" >
+        fitToMinDaysUsed = #{fitToMinDaysUsed,jdbcType=INTEGER},
+      </if>
+      <if test="fitToMaxDaysUsed != null" >
+        fitToMaxDaysUsed = #{fitToMaxDaysUsed,jdbcType=INTEGER},
+      </if>
+      <if test="fitToEmissionVolume != null" >
+        fitToEmissionVolume = #{fitToEmissionVolume,jdbcType=VARCHAR},
+      </if>
+      <if test="fitToVehicleScope != null" >
+        fitToVehicleScope = #{fitToVehicleScope,jdbcType=VARCHAR},
+      </if>
+      <if test="fitToCity != null" >
+        fitToCity = #{fitToCity,jdbcType=VARCHAR},
+      </if>
+      <if test="beginDatetime != null" >
+        beginDatetime = #{beginDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDatetime != null" >
+        endDatetime = #{endDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="validInDays != null" >
+        validInDays = #{validInDays,jdbcType=INTEGER},
+      </if>
+      <if test="moneyAmount != null" >
+        moneyAmount = #{moneyAmount,jdbcType=REAL},
+      </if>
+      <if test="color1 != null" >
+        color1 = #{color1,jdbcType=VARCHAR},
+      </if>
+      <if test="color2 != null" >
+        color2 = #{color2,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleBrief != null" >
+        ruleBrief = #{ruleBrief,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="actived != null" >
+        actived = #{actived,jdbcType=BIT},
+      </if>
+      <if test="deleted != null" >
+        deleted = #{deleted,jdbcType=BIT},
+      </if>
+      <if test="createdDatetime != null" >
+        createdDatetime = #{createdDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedDatetime != null" >
+        updatedDatetime = #{updatedDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ruleDetail != null" >
+        ruleDetail = #{ruleDetail,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="project.base.poi.entiy.Coupon" >
+    update t_coupon
+    set code = #{code,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      fitToMinKm = #{fitToMinKm,jdbcType=INTEGER},
+      fitToMaxKm = #{fitToMaxKm,jdbcType=INTEGER},
+      fitToMinDaysUsed = #{fitToMinDaysUsed,jdbcType=INTEGER},
+      fitToMaxDaysUsed = #{fitToMaxDaysUsed,jdbcType=INTEGER},
+      fitToEmissionVolume = #{fitToEmissionVolume,jdbcType=VARCHAR},
+      fitToVehicleScope = #{fitToVehicleScope,jdbcType=VARCHAR},
+      fitToCity = #{fitToCity,jdbcType=VARCHAR},
+      beginDatetime = #{beginDatetime,jdbcType=TIMESTAMP},
+      endDatetime = #{endDatetime,jdbcType=TIMESTAMP},
+      validInDays = #{validInDays,jdbcType=INTEGER},
+      moneyAmount = #{moneyAmount,jdbcType=REAL},
+      color1 = #{color1,jdbcType=VARCHAR},
+      color2 = #{color2,jdbcType=VARCHAR},
+      ruleBrief = #{ruleBrief,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      actived = #{actived,jdbcType=BIT},
+      deleted = #{deleted,jdbcType=BIT},
+      createdDatetime = #{createdDatetime,jdbcType=TIMESTAMP},
+      updatedDatetime = #{updatedDatetime,jdbcType=TIMESTAMP},
+      ruleDetail = #{ruleDetail,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="project.base.poi.entiy.Coupon" >
+    update t_coupon
+    set code = #{code,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      fitToMinKm = #{fitToMinKm,jdbcType=INTEGER},
+      fitToMaxKm = #{fitToMaxKm,jdbcType=INTEGER},
+      fitToMinDaysUsed = #{fitToMinDaysUsed,jdbcType=INTEGER},
+      fitToMaxDaysUsed = #{fitToMaxDaysUsed,jdbcType=INTEGER},
+      fitToEmissionVolume = #{fitToEmissionVolume,jdbcType=VARCHAR},
+      fitToVehicleScope = #{fitToVehicleScope,jdbcType=VARCHAR},
+      fitToCity = #{fitToCity,jdbcType=VARCHAR},
+      beginDatetime = #{beginDatetime,jdbcType=TIMESTAMP},
+      endDatetime = #{endDatetime,jdbcType=TIMESTAMP},
+      validInDays = #{validInDays,jdbcType=INTEGER},
+      moneyAmount = #{moneyAmount,jdbcType=REAL},
+      color1 = #{color1,jdbcType=VARCHAR},
+      color2 = #{color2,jdbcType=VARCHAR},
+      ruleBrief = #{ruleBrief,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      actived = #{actived,jdbcType=BIT},
+      deleted = #{deleted,jdbcType=BIT},
+      createdDatetime = #{createdDatetime,jdbcType=TIMESTAMP},
+      updatedDatetime = #{updatedDatetime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

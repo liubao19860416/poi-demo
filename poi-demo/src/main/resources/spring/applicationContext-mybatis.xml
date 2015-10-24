@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	  http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	  http://www.springframework.org/schema/context
+	  http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<!-- 会化工厂，将对应的资源，交给spring管理 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:spring/mybatis.cfg.xml" />
+		<!-- 也可以在mybatis.cfg.xml中配置 -->
+		<property name="typeAliasesPackage" value="project.base.poi.entiy" />
+		<!-- 对于mapperLocations两种形式都可以使用如下，也可以在mybatis.cfg.xml中配置 -->
+		<property name="mapperLocations" value="project.base.poi.dao.**.*Mapper.xml" />
+		<!-- <property name="mapperLocations" value="classpath:../classes/project/base/poi/dao/**/*Mapper.xml" /> -->
+	</bean>
+	
+	<!-- mapper映射的bean对象自动扫描 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="project.base.poi.dao.mapper" />
+		<!-- optional unless there are multiple session factories defined -->
+		<!-- <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" /> -->
+	</bean>
+
+</beans>
